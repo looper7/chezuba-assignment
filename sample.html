@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        font-family: Arial;
+      }
+
+      /* Style the tab */
+      .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+      }
+.tab-pane{
+    position: relative;
+}
+      .custon-cont{
+          margin-top: 50px;
+      }
+
+      /* Change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #ddd;
+      }
+
+      /* Create an active/current tablink class */
+      .tab button.active {
+        background-color: #ccc;
+      }
+
+      /* Style the tab content */
+      .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+      
+      }
+      .tab li{
+        width: 33.33%;
+          text-align: center;
+          
+      }
+      .nav-tabs{
+        
+    margin: 0;
+    padding: 0;
+    border: none;
+      }
+      .cus-pills{
+          background-color: transparent !important;
+          transition: .3s ease-out;
+      }
+      .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+        background-color: #4d4e54 !important;
+            border: none;
+          color: white;
+      }
+      .nav-tabs>li>a:hover{
+        background-color: #4d4e5491 !important;
+        border: none;
+          color: white;
+      }
+      .nav-tabs>li>a{
+          color: black;
+         
+          margin: 0;
+          border: none;
+          border-radius: 0px;
+      }
+      .tab{
+        border-radius: 6px;
+    background-color: #dfdfdf;
+    border: none;
+      }
+      #div1,#div2,#div3{
+          padding: 30px;
+      }
+      .cus-title{
+          font-size: 15px;
+          font-weight: 600;
+
+      }
+      .cus-title span{
+          font-weight: 400;
+      }
+      .form-control{
+        margin: 40px auto 0 auto;
+    max-width: 300px;
+      }
+      .cus-list{
+        padding: 10px 0;
+    border: 1px solid #6c6c6c61;
+    border-radius: 5px;
+    padding-left: 12px;
+    margin: 5px 0;
+    position: relative;
+      }
+      .cus-list i{
+        position: absolute;
+    right: 30px;
+    color: #F44336;
+    transition: .3s ease-in;
+    cursor: pointer;
+    font-size: 24px;
+    top: 22px;
+      }
+      .cus-list i:hover{
+          color: black;
+      }
+      .resetbtn{
+        position: absolute;
+    top: 0;
+    right: 35px;
+      }
+    </style>
+  </head>
+  <body>
+<div class="container custon-cont">
+   
+        <div class="tab">
+            <ul class="nav nav-tabs">
+              <li class="active"><a  data-toggle="tab" href="#first">Third</a></li>
+              <li><a data-toggle="tab"  href="#second">Fifth</a></li>
+              <li><a data-toggle="tab"  href="#third">Magic</a></li>
+              
+            </ul>
+          </div>
+          <div class="tab-content">
+              <div id="first" class="tab-pane fade in active">
+                <input id="search1" class="form-control" type="text" placeholder="Search..">
+                <input type="button" class="btn btn-primary resetbtn" value="Reset">
+                <div id="div1"></div>
+              </div>
+              <div id="second" class="tab-pane fade">
+                <input id="search2" class="form-control" type="text" placeholder="Search..">
+                <input type="button" class="btn btn-primary resetbtn" value="Reset">
+                <div id="div2"></div>
+              </div>
+              <div id="third" class="tab-pane fade">
+                <input id="search3" class="form-control" type="text" placeholder="Search..">
+                <input type="button" class="btn btn-primary resetbtn" value="Reset">
+                <div id="div3"></div>
+              </div>
+            </div>
+</div>
+
+    </div>
+    
+    <script>
+        $(document).ready(function(){
+           
+  $("#search1,#search2,#search3").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#div1 *,#div3 *,#div2 *").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+      //   $holder = document.getElementById("div1");
+      $(document).ready(function () {
+        $first = [];
+        $second = [];
+        $third = [];
+        fetch("https://jsonplaceholder.typicode.com/posts")
+          .then((response) => response.json())
+          .then((json) => {
+            // console.log(json);
+            json.map((item) => {
+              if (item.id % 3 == 0) {
+                item.catagory = "third";
+                $first.push(`<div class='cus-list'><div class='cus-title'> Title: <span>${item.title}<span> </div>
+                            <div class='cus-title'> Category: <span>${item.catagory}<span> </div><i class="fa fa-trash" aria-hidden="true"></i></div>`);
+              } else if (item.id % 5 == 0) {
+               
+                item.catagory = "fifth";
+                $second.push(`<div class='cus-list'><div class='cus-title'>Title:  <span>${item.title}<span> </div>
+                            <div class='cus-title'>Category: <span>${item.catagory}<span> </div><i class="fa fa-trash" aria-hidden="true"></i></div>`);
+              } 
+              if(item.id % 3 == 0 && item.id % 5 == 0) {
+                    item.catagory = "magic";
+                $third.push(`<div class='cus-list'><div class='cus-title'> Title: <span>${item.title}<span> </div>
+                            <div class='cus-title'>Category: <span>${item.catagory}<span> </div><i class="fa fa-trash" aria-hidden="true"></i></div>`);
+                  
+              }
+          
+              $("#div2").html($second);
+              $("#div1").html($first);
+              $("#div3").html($third);
+            });
+
+            $(".cus-list i").on("click",function(){
+              $(this).parent().hide();
+          });
+          $(".resetbtn").on("click",function(){
+            location.reload();
+          });
+            // console.log($items);
+          });
+         
+
+          
+      });
+
+      
+    </script>
+  </body>
+</html>
